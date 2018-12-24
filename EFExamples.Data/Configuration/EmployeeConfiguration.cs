@@ -14,11 +14,28 @@ namespace EFExamples.Data.Configuration
         {
             builder.OwnsOne(m => m.Name, a =>
             {
-                new PersonNameConfiguration();
+                a.Property(p => p.FirstName).HasMaxLength(300)
+                    .HasColumnName("FirstName")
+                    .HasDefaultValue("");
+                a.Property(p => p.LastName).HasMaxLength(300)
+                    .HasColumnName("LastName")
+                    .HasDefaultValue("");
+                a.Ignore(p => p.FullName);
             });
             builder.OwnsOne(m => m.Address, a =>
             {
-                new AddressConfiguration();
+                a.Property(p => p.StreetAddress).HasMaxLength(600)
+                    .HasColumnName("StreetAddress")
+                    .HasDefaultValue("");
+                a.Property(p => p.City).HasMaxLength(150)
+                    .HasColumnName("City")
+                    .HasDefaultValue("");
+                a.Property(p => p.State).HasMaxLength(60)
+                    .HasColumnName("State")
+                    .HasDefaultValue("");
+                a.Property(p => p.ZipCode).HasMaxLength(12)
+                    .HasColumnName("ZipCode")
+                    .HasDefaultValue("");
             });
             builder.Property(p => p.EmployeeId).HasDefaultValueSql(DataConstants.SqlServer.NewSequentialId);
 

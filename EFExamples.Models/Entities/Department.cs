@@ -11,7 +11,7 @@ namespace EFExamples.Models.Entities
         public string Name { get; set; }
 
         public Company Company { get; set; }
-        public ICollection<Contractor> Contractors { get; set; }
+        public ICollection<DepartmentContractor> DepartmentContractors { get; set; }
         public ICollection<Employee> Employees { get; set; }
     }
 }

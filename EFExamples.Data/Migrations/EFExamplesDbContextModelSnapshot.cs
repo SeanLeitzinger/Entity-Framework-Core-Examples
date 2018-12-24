@@ -59,13 +59,9 @@ namespace EFExamples.Data.Migrations
                     b.Property<DateTime?>("DateUpdated")
                         .HasColumnType("datetime2(2)");
 
-                    b.Property<int>("DepartmentId");
-
                     b.Property<int>("VendorId");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("DepartmentId");
 
                     b.HasIndex("VendorId");
 
@@ -98,6 +94,19 @@ namespace EFExamples.Data.Migrations
                     b.HasIndex("CompanyId");
 
                     b.ToTable("Department");
+                });
+
+            modelBuilder.Entity("EFExamples.Models.Entities.DepartmentContractor", b =>
+                {
+                    b.Property<int>("ContractorId");
+
+                    b.Property<int>("DepartmentId");
+
+                    b.HasKey("ContractorId", "DepartmentId");
+
+                    b.HasIndex("DepartmentId");
+
+                    b.ToTable("DepartmentContractor");
                 });
 
             modelBuilder.Entity("EFExamples.Models.Entities.Employee", b =>
@@ -159,11 +168,6 @@ namespace EFExamples.Data.Migrations
 
             modelBuilder.Entity("EFExamples.Models.Entities.Contractor", b =>
                 {
-                    b.HasOne("EFExamples.Models.Entities.Department", "Department")
-                        .WithMany("Contractors")
-                        .HasForeignKey("DepartmentId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("EFExamples.Models.Entities.Vendor", "Vendor")
                         .WithMany("Contractors")
                         .HasForeignKey("VendorId")
@@ -174,6 +178,30 @@ namespace EFExamples.Data.Migrations
                             b1.Property<int>("ContractorId")
                                 .ValueGeneratedOnAdd()
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("City")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("City")
+                                .HasMaxLength(150)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("State")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("State")
+                                .HasMaxLength(60)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("StreetAddress")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("StreetAddress")
+                                .HasMaxLength(600)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("ZipCode")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("ZipCode")
+                                .HasMaxLength(12)
+                                .HasDefaultValue("");
 
                             b1.HasKey("ContractorId");
 
@@ -191,6 +219,18 @@ namespace EFExamples.Data.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                            b1.Property<string>("FirstName")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("FirstName")
+                                .HasMaxLength(300)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("LastName")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("LastName")
+                                .HasMaxLength(300)
+                                .HasDefaultValue("");
+
                             b1.HasKey("ContractorId");
 
                             b1.ToTable("Contractor");
@@ -207,6 +247,19 @@ namespace EFExamples.Data.Migrations
                     b.HasOne("EFExamples.Models.Entities.Company", "Company")
                         .WithMany("Departments")
                         .HasForeignKey("CompanyId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("EFExamples.Models.Entities.DepartmentContractor", b =>
+                {
+                    b.HasOne("EFExamples.Models.Entities.Contractor", "Contractor")
+                        .WithMany("DepartmentContractors")
+                        .HasForeignKey("ContractorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("EFExamples.Models.Entities.Department", "Department")
+                        .WithMany("DepartmentContractors")
+                        .HasForeignKey("DepartmentId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -228,6 +281,30 @@ namespace EFExamples.Data.Migrations
                                 .ValueGeneratedOnAdd()
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                            b1.Property<string>("City")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("City")
+                                .HasMaxLength(150)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("State")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("State")
+                                .HasMaxLength(60)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("StreetAddress")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("StreetAddress")
+                                .HasMaxLength(600)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("ZipCode")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("ZipCode")
+                                .HasMaxLength(12)
+                                .HasDefaultValue("");
+
                             b1.HasKey("EmployeeId");
 
                             b1.ToTable("Employee");
@@ -243,6 +320,18 @@ namespace EFExamples.Data.Migrations
                             b1.Property<int>("EmployeeId")
                                 .ValueGeneratedOnAdd()
                                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                            b1.Property<string>("FirstName")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("FirstName")
+                                .HasMaxLength(300)
+                                .HasDefaultValue("");
+
+                            b1.Property<string>("LastName")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnName("LastName")
+                                .HasMaxLength(300)
+                                .HasDefaultValue("");
 
                             b1.HasKey("EmployeeId");
 

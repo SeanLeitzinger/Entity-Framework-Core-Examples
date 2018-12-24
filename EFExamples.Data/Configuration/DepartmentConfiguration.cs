@@ -16,7 +16,7 @@ namespace EFExamples.Data.Configuration
 
             builder.HasOne(m => m.Company).WithMany(m => m.Departments).HasForeignKey(k => k.CompanyId);
             builder.HasMany(m => m.Employees).WithOne(m => m.Department).HasForeignKey(k => k.DepartmentId);
-            builder.HasMany(m => m.Contractors).WithOne(m => m.Department).HasForeignKey(k => k.DepartmentId);
+            builder.HasMany(m => m.DepartmentContractors).WithOne(m => m.Department).HasForeignKey(k => k.DepartmentId);
 
             base.Configure(builder);
         }

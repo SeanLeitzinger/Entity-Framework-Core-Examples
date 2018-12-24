@@ -17,6 +17,7 @@ namespace EFExamples.Data
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Contractor> Contractor { get; set; }
         public virtual DbSet<Department> Department { get; set; }
+        public virtual DbSet<DepartmentContractor> DepartmentContractor { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
 
@@ -25,6 +26,7 @@ namespace EFExamples.Data
             builder.ApplyConfiguration(new CompanyConfiguration());
             builder.ApplyConfiguration(new ContractorConfiguration());
             builder.ApplyConfiguration(new DepartmentConfiguration());
+            builder.ApplyConfiguration(new DepartmentContractorConfiguration());
             builder.ApplyConfiguration(new EmployeeConfiguration());
             builder.ApplyConfiguration(new VendorConfiguration());
         }

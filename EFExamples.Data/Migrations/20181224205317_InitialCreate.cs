@@ -68,19 +68,18 @@ namespace EFExamples.Data.Migrations
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
                     DateCreated = table.Column<DateTime>(type: "datetime2(2)", nullable: false, defaultValueSql: "sysdatetime()"),
                     DateUpdated = table.Column<DateTime>(type: "datetime2(2)", nullable: true),
-                    DepartmentId = table.Column<int>(nullable: false),
                     VendorId = table.Column<int>(nullable: false),
-                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                    StreetAddress = table.Column<string>(maxLength: 600, nullable: true, defaultValue: ""),
+                    City = table.Column<string>(maxLength: 150, nullable: true, defaultValue: ""),
+                    State = table.Column<string>(maxLength: 60, nullable: true, defaultValue: ""),
+                    ZipCode = table.Column<string>(maxLength: 12, nullable: true, defaultValue: ""),
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 300, nullable: true, defaultValue: ""),
+                    LastName = table.Column<string>(maxLength: 300, nullable: true, defaultValue: "")
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Contractor", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Contractor_Department_DepartmentId",
-                        column: x => x.DepartmentId,
-                        principalTable: "Department",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Contractor_Vendor_VendorId",
                         column: x => x.VendorId,
@@ -100,7 +99,13 @@ namespace EFExamples.Data.Migrations
                     CompanyId = table.Column<int>(nullable: false),
                     DepartmentId = table.Column<int>(nullable: false),
                     EmployeeId = table.Column<Guid>(nullable: false, defaultValueSql: "newsequentialid()"),
-                    DateOfBirth = table.Column<DateTime>(nullable: false)
+                    StreetAddress = table.Column<string>(maxLength: 600, nullable: true, defaultValue: ""),
+                    City = table.Column<string>(maxLength: 150, nullable: true, defaultValue: ""),
+                    State = table.Column<string>(maxLength: 60, nullable: true, defaultValue: ""),
+                    ZipCode = table.Column<string>(maxLength: 12, nullable: true, defaultValue: ""),
+                    DateOfBirth = table.Column<DateTime>(nullable: false),
+                    FirstName = table.Column<string>(maxLength: 300, nullable: true, defaultValue: ""),
+                    LastName = table.Column<string>(maxLength: 300, nullable: true, defaultValue: "")
                 },
                 constraints: table =>
                 {
@@ -119,10 +124,29 @@ namespace EFExamples.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Contractor_DepartmentId",
-                table: "Contractor",
-                column: "DepartmentId");
+            migrationBuilder.CreateTable(
+                name: "DepartmentContractor",
+                columns: table => new
+                {
+                    ContractorId = table.Column<int>(nullable: false),
+                    DepartmentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DepartmentContractor", x => new { x.ContractorId, x.DepartmentId });
+                    table.ForeignKey(
+                        name: "FK_DepartmentContractor_Contractor_ContractorId",
+                        column: x => x.ContractorId,
+                        principalTable: "Contractor",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_DepartmentContractor_Department_DepartmentId",
+                        column: x => x.DepartmentId,
+                        principalTable: "Department",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contractor_VendorId",
@@ -133,6 +157,11 @@ namespace EFExamples.Data.Migrations
                 name: "IX_Department_CompanyId",
                 table: "Department",
                 column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_DepartmentContractor_DepartmentId",
+                table: "DepartmentContractor",
+                column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employee_CompanyId",
@@ -148,16 +177,19 @@ namespace EFExamples.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Contractor");
+                name: "DepartmentContractor");
 
             migrationBuilder.DropTable(
                 name: "Employee");
 
             migrationBuilder.DropTable(
-                name: "Vendor");
+                name: "Contractor");
 
             migrationBuilder.DropTable(
                 name: "Department");
+
+            migrationBuilder.DropTable(
+                name: "Vendor");
 
             migrationBuilder.DropTable(
                 name: "Company");

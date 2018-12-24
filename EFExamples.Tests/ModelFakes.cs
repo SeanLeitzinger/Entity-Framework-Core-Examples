@@ -32,9 +32,9 @@ namespace EFExamples.Tests
         public static void BuildContractorFaker()
         {
             ContractorFake = new Faker<Contractor>();
-            EmployeeFake.RuleFor(m => m.Name, r => new PersonName(r.Name.FirstName(), r.Name.LastName()));
-            EmployeeFake.RuleFor(m => m.Address, r => new Address(r.Address.StreetAddress(), r.Address.City(), r.Address.State(), r.Address.ZipCode()));
-            EmployeeFake.RuleFor(m => m.DateOfBirth, r => r.Person.DateOfBirth.Date);
+            ContractorFake.RuleFor(m => m.Name, r => new PersonName(r.Name.FirstName(), r.Name.LastName()));
+            ContractorFake.RuleFor(m => m.Address, r => new Address(r.Address.StreetAddress(), r.Address.City(), r.Address.State(), r.Address.ZipCode()));
+            ContractorFake.RuleFor(m => m.DateOfBirth, r => r.Person.DateOfBirth.Date);
         }
 
 
