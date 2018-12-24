@@ -1,2 +1,2 @@
-# Entity-Framework-Core-Examples
+# Entity Framework Core Examples
 Examples for working with Entity Framework Core
