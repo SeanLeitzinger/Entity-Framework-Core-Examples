@@ -16,9 +16,9 @@ namespace EFExamples.Models.ValueTypes
 
         }
 
-        public Address(string streetAddres, string city, string state, string zipCode)
+        public Address(string streetAddress, string city, string state, string zipCode)
         {
-            StreetAddress = streetAddres;
+            StreetAddress = streetAddress;
             City = city;
             State = state;
             ZipCode = zipCode;

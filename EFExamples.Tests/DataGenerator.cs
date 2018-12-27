@@ -33,6 +33,12 @@ namespace EFExamples.Tests
             dbContext = new EFExamplesDbContext();
         }
 
+        [ClassCleanup]
+        public static void ClassCleanUp()
+        {
+            dbContext.Dispose();
+        }
+
         [TestMethod]
         public void GenerateData()
         {
