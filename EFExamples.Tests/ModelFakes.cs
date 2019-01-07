@@ -43,7 +43,6 @@ namespace EFExamples.Tests
             EmployeeFake = new Faker<Employee>();
             EmployeeFake.RuleFor(m => m.Name, r => new PersonName(r.Name.FirstName(), r.Name.LastName()));
             EmployeeFake.RuleFor(m => m.Address, r => new Address(r.Address.StreetAddress(), r.Address.City(), r.Address.State(), r.Address.ZipCode()));
-            EmployeeFake.RuleFor(m => m.EmployeeId, r => Guid.NewGuid());
             EmployeeFake.RuleFor(m => m.DateOfBirth, r => r.Person.DateOfBirth.Date);
         }
 

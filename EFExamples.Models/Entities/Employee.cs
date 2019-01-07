@@ -9,7 +9,7 @@ namespace EFExamples.Models.Entities
     {
         public int CompanyId { get; set; }
         public int DepartmentId { get; set; }
-        public Guid EmployeeId { get; set; }
+        public Guid EmployeeId { get; private set; }
 
         public Address Address { get; set; }
         public DateTime DateOfBirth { get; set; }

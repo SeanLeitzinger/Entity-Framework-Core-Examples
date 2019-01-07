@@ -38,6 +38,7 @@ namespace EFExamples.Data.Configuration
                     .HasDefaultValue("");
             });
             builder.Property(p => p.EmployeeId).HasDefaultValueSql(DataConstants.SqlServer.NewSequentialId);
+            builder.HasIndex(p => p.EmployeeId).HasName("IX_Employee_EmployeeId");
 
             builder.HasOne(m => m.Company).WithMany(m => m.Employees)
                 .OnDelete(DeleteBehavior.Restrict)
