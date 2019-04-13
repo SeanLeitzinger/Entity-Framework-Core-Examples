@@ -1,7 +1,6 @@
 ﻿using EFExamples.Models.ValueTypes;
 using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EFExamples.Models.Entities
 {
@@ -17,5 +16,6 @@ namespace EFExamples.Models.Entities
 
         public Company Company { get; set; }
         public Department Department { get; set; }
+        public ICollection<EmployeeDocument> EmployeeDocuments { get; set; }
     }
 }

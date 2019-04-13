@@ -1,5 +1,6 @@
 using EFExamples.Data;
 using EFExamples.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace EFExamples.Tests
         private readonly int numberOfEmployeesPerDepartment = 25;
         private readonly int numberOfVendorsPerCompany = 3;
         private readonly Random random = new Random();
+        private readonly List<int> documentTypeIds = new List<int> { 1, 2, 3 };
 
         [ClassInitialize]
         public static void ClassInitialize(TestContext context)
@@ -37,6 +39,52 @@ namespace EFExamples.Tests
         public static void ClassCleanUp()
         {
             dbContext.Dispose();
+        }
+
+
+        [TestMethod]
+        public void AddFileTypes()
+        {
+            var documentTypes = new List<DocumentType>
+            {
+                new DocumentType
+                {
+                    Name = "Invoice"
+                },
+                new DocumentType
+                {
+                    Name = "References"
+                },
+                new DocumentType
+                {
+                    Name = "Form I9"
+                }
+            };
+
+            dbContext.DocumentType.AddRange(documentTypes);
+            dbContext.SaveChanges();
+        }
+
+        [TestMethod]
+        public void AddDocumentsToExistingEmployees()
+        {
+            var employees = dbContext.Employee.Include(m => m.EmployeeDocuments).ToList();
+
+            foreach (var employee in employees)
+            {
+                employee.EmployeeDocuments.Add(new EmployeeDocument
+                {
+                    FileDescription = new FileDescription
+                    {
+                        ContentType = ".PDF",
+                        FileName = "Test File",
+                        Description = "File description",
+                        DocumentTypeId = documentTypeIds.ElementAt(random.Next(documentTypeIds.Count))
+                    }
+                });
+            }
+
+            dbContext.SaveChanges();
         }
 
         [TestMethod]
@@ -61,7 +109,7 @@ namespace EFExamples.Tests
                     var vendor = ModelFakes.VendorFake.Generate();
                     vendor.Contractors = new List<Contractor>();
 
-                    for(var c = 0; c < numberOfContractorsPerVendor; c++)
+                    for (var c = 0; c < numberOfContractorsPerVendor; c++)
                     {
                         var contractor = ModelFakes.ContractorFake.Generate();
                         vendor.Contractors.Add(contractor);
@@ -89,9 +137,22 @@ namespace EFExamples.Tests
                     {
                         var employee = ModelFakes.EmployeeFake.Generate();
                         employee.CompanyId = company.Id;
+                        employee.EmployeeDocuments = new List<EmployeeDocument>
+                        {
+                            new EmployeeDocument
+                            {
+                                FileDescription = new FileDescription
+                                {
+                                    ContentType = ".PDF",
+                                    FileName = "Test File",
+                                    Description = "File description",
+                                    DocumentTypeId = documentTypeIds.ElementAt(random.Next(documentTypeIds.Count))
+                                }
+                            }
+                        };
                         department.Employees.Add(employee);
                     }
-                    
+
                     var vendor = vendors[random.Next(vendors.Count)];
 
                     for (var v = 0; v < numberOfContractorsPerDepartment; v++)

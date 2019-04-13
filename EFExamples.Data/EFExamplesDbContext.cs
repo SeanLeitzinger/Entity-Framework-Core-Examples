@@ -18,7 +18,10 @@ namespace EFExamples.Data
         public virtual DbSet<Contractor> Contractor { get; set; }
         public virtual DbSet<Department> Department { get; set; }
         public virtual DbSet<DepartmentContractor> DepartmentContractor { get; set; }
+        public virtual DbSet<DocumentType> DocumentType { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
+        public virtual DbSet<EmployeeDocument> EmployeeDocument { get; set; }
+        public virtual DbSet<FileDescription> FileDescription { get; set; }
         public virtual DbSet<Vendor> Vendor { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -27,7 +30,10 @@ namespace EFExamples.Data
             builder.ApplyConfiguration(new ContractorConfiguration());
             builder.ApplyConfiguration(new DepartmentConfiguration());
             builder.ApplyConfiguration(new DepartmentContractorConfiguration());
+            builder.ApplyConfiguration(new DocumentTypeConfiguration());
             builder.ApplyConfiguration(new EmployeeConfiguration());
+            builder.ApplyConfiguration(new EmployeeDocumentConfiguration());
+            builder.ApplyConfiguration(new FileDescriptionConfiguration());
             builder.ApplyConfiguration(new VendorConfiguration());
         }
 

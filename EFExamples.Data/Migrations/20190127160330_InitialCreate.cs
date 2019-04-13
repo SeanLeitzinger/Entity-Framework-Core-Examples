@@ -172,6 +172,12 @@ namespace EFExamples.Data.Migrations
                 name: "IX_Employee_DepartmentId",
                 table: "Employee",
                 column: "DepartmentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Employee_EmployeeId",
+                table: "Employee",
+                column: "EmployeeId")
+                .Annotation("SqlServer:Clustered", false);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

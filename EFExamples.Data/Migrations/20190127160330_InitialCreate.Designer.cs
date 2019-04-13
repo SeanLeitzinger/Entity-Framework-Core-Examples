@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace EFExamples.Data.Migrations
 {
     [DbContext(typeof(EFExamplesDbContext))]
-    [Migration("20181224205317_InitialCreate")]
+    [Migration("20190127160330_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -140,6 +140,10 @@ namespace EFExamples.Data.Migrations
                     b.HasIndex("CompanyId");
 
                     b.HasIndex("DepartmentId");
+
+                    b.HasIndex("EmployeeId")
+                        .HasName("IX_Employee_EmployeeId")
+                        .HasAnnotation("SqlServer:Clustered", false);
 
                     b.ToTable("Employee");
                 });

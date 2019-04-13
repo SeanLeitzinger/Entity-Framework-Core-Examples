@@ -1,0 +1,3 @@
+﻿
+ALTER DATABASE [$(DatabaseName)]
+	ADD FILEGROUP [EmployeeProfileImages] CONTAINS FILESTREAM

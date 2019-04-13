@@ -1,10 +1,6 @@
-﻿using EFExamples.Models;
-using EFExamples.Models.Entities;
+﻿using EFExamples.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EFExamples.Data.Configuration
 {
@@ -46,6 +42,7 @@ namespace EFExamples.Data.Configuration
             builder.HasOne(m => m.Department).WithMany(m => m.Employees)
                 .OnDelete(DeleteBehavior.Restrict)
                 .HasForeignKey(k => k.DepartmentId);
+            builder.HasMany(m => m.EmployeeDocuments).WithOne(m => m.Employee).HasForeignKey(k => k.EmployeeId);
 
             base.Configure(builder);
         }

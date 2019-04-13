@@ -139,6 +139,10 @@ namespace EFExamples.Data.Migrations
 
                     b.HasIndex("DepartmentId");
 
+                    b.HasIndex("EmployeeId")
+                        .HasName("IX_Employee_EmployeeId")
+                        .HasAnnotation("SqlServer:Clustered", false);
+
                     b.ToTable("Employee");
                 });
 
