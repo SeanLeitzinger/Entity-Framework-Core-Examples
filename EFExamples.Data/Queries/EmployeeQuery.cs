@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace EFExamples.Data.Queries
 {
-public static class EmployeeQuery
-{
-    public static async Task<dynamic> GetEmployeeByIdAsync(this DbSet<Employee> employeeDbSet, Expression<Func<Employee, dynamic>> projection, int employeeId)
+    public static class EmployeeQuery
     {
-        return await employeeDbSet.Where(m => m.Id == employeeId).Select(projection).FirstOrDefaultAsync();
+        public static async Task<dynamic> GetEmployeeByIdAsync(this DbSet<Employee> employeeDbSet, Expression<Func<Employee, dynamic>> projection, int employeeId)
+        {
+            return await employeeDbSet.Where(m => m.Id == employeeId).Select(projection).FirstOrDefaultAsync();
+        }
     }
-}
 }

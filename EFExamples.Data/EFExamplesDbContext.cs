@@ -14,6 +14,8 @@ namespace EFExamples.Data
         {
         }
 
+        public EFExamplesDbContext(DbContextOptions<EFExamplesDbContext> options) : base(options) { }
+
         public virtual DbSet<Company> Company { get; set; }
         public virtual DbSet<Contractor> Contractor { get; set; }
         public virtual DbSet<Department> Department { get; set; }
